@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+# Node
+node_modules/
+frontend/dist/
+# Secrets and local config
+.env
+.env.*
+!.env.example
+# Local data, models and caches (never commit weights or user text)
+data/local/
+models/
+*.sqlite3
+*.db
+.hf-cache/
+reports/local/
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
