@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "code_sets": {
+    "flores200": {
+      "en": "eng_Latn",
+      "te": "tel_Telu",
+      "hi": "hin_Deva",
+      "ta": "tam_Taml",
+      "kn": "kan_Knda",
+      "ml": "mal_Mlym",
+      "bn": "ben_Beng",
+      "mr": "mar_Deva",
+      "gu": "guj_Gujr",
+      "ur": "urd_Arab",
+      "pa": "pan_Guru"
+    },
+    "mbart50": {
+      "en": "en_XX",
+      "te": "te_IN",
+      "hi": "hi_IN",
+      "ta": "ta_IN",
+      "ml": "ml_IN",
+      "bn": "bn_IN",
+      "mr": "mr_IN",
+      "gu": "gu_IN",
+      "ur": "ur_PK"
+    }
+  },
+  "models": [
+    {
+      "id": "nllb-200-distilled-600m",
+      "display_name": "NLLB-200 distilled (600M)",
+      "family": "nllb",
+      "task": "translate",
+      "hf_repo": "facebook/nllb-200-distilled-600M",
+      "licence": {
+        "spdx": "CC-BY-NC-4.0",
+        "class": "non_commercial",
+        "verified": true,
+        "note": "Research use only. The model card lists production deployment and document translation as out of scope."
+      },
+      "requires_remote_code": false,
+      "params_millions": 600,
+      "code_set": "flores200",
+      "sources": "all",
+      "targets": "all",
+      "priority": 60,
+      "enabled_by_default": true,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Model card: 200 languages. Codes follow FLORES-200 names and are not yet verified against the tokenizer.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/facebook/nllb-200-distilled-600M"
+        ]
+      },
+      "notes": "Trained on inputs up to 512 tokens, so long text is translated sentence by sentence."
+    },
+    {
+      "id": "mbart50-many-to-many",
+      "display_name": "mBART-50 many-to-many",
+      "family": "mbart50",
+      "task": "translate",
+      "hf_repo": "facebook/mbart-large-50-many-to-many-mmt",
+      "licence": {
+        "spdx": "MIT",
+        "class": "permissive",
+        "verified": false,
+        "note": "Expected licence for this checkpoint family; run scripts/pin_models.py to confirm against Hub metadata. Unverified models are excluded in commercial mode."
+      },
+      "requires_remote_code": false,
+      "params_millions": 611,
+      "code_set": "mbart50",
+      "sources": "all",
+      "targets": "all",
+      "priority": 40,
+      "enabled_by_default": true,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Model card language list (50 languages). It includes Telugu, Hindi, Tamil, Malayalam, Marathi, Gujarati, Bengali and Urdu, but not Kannada or Punjabi.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/facebook/mbart-large-50-many-to-many-mmt"
+        ]
+      },
+      "notes": "Multilingual baseline."
+    },
+    {
+      "id": "indictrans2-en-indic-1b",
+      "display_name": "IndicTrans2 English to Indic (1B)",
+      "family": "indictrans2",
+      "task": "translate",
+      "hf_repo": "ai4bharat/indictrans2-en-indic-1B",
+      "licence": {
+        "spdx": "MIT",
+        "class": "permissive",
+        "verified": false,
+        "note": "MIT per the IndicTrans2 GitHub repository and the sibling indic-indic-1B model page; this repository's own model card was not opened. scripts/pin_models.py verifies it against Hub metadata."
+      },
+      "requires_remote_code": true,
+      "params_millions": 1000,
+      "code_set": "flores200",
+      "sources": [
+        "en"
+      ],
+      "targets": "non_english",
+      "priority": 95,
+      "enabled_by_default": false,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Paper and model card: all 22 scheduled Indian languages plus English. Codes follow FLORES-style names and are not yet verified against the tokenizer.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/ai4bharat/indictrans2-en-indic-1B",
+          "https://arxiv.org/abs/2305.16307"
+        ]
+      },
+      "notes": "Uses custom modelling code (trust_remote_code) and the IndicTransToolkit pre/post-processor. Disabled until the compatibility check passes on your machine."
+    },
+    {
+      "id": "indictrans2-indic-en-1b",
+      "display_name": "IndicTrans2 Indic to English (1B)",
+      "family": "indictrans2",
+      "task": "translate",
+      "hf_repo": "ai4bharat/indictrans2-indic-en-1B",
+      "licence": {
+        "spdx": "MIT",
+        "class": "permissive",
+        "verified": false,
+        "note": "MIT per the IndicTrans2 GitHub repository and the sibling indic-indic-1B model page; this repository's own model card was not opened. scripts/pin_models.py verifies it against Hub metadata."
+      },
+      "requires_remote_code": true,
+      "params_millions": 1000,
+      "code_set": "flores200",
+      "sources": "non_english",
+      "targets": [
+        "en"
+      ],
+      "priority": 95,
+      "enabled_by_default": false,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Paper and model card: all 22 scheduled Indian languages plus English. Codes follow FLORES-style names and are not yet verified against the tokenizer.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/ai4bharat/indictrans2-indic-en-1B",
+          "https://arxiv.org/abs/2305.16307"
+        ]
+      },
+      "notes": "Uses custom modelling code (trust_remote_code) and the IndicTransToolkit pre/post-processor. Disabled until the compatibility check passes on your machine."
+    },
+    {
+      "id": "indictrans2-indic-indic-1b",
+      "display_name": "IndicTrans2 Indic to Indic (1B)",
+      "family": "indictrans2",
+      "task": "translate",
+      "hf_repo": "ai4bharat/indictrans2-indic-indic-1B",
+      "licence": {
+        "spdx": "MIT",
+        "class": "permissive",
+        "verified": true,
+        "note": "MIT: shown on the Hub model page and the GitHub repository (checked 2026-11-16)."
+      },
+      "requires_remote_code": true,
+      "params_millions": 1000,
+      "code_set": "flores200",
+      "sources": "non_english",
+      "targets": "non_english",
+      "priority": 95,
+      "enabled_by_default": false,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Paper and model card: direct translation between the 22 scheduled Indian languages. Codes follow FLORES-style names and are not yet verified against the tokenizer.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/ai4bharat/indictrans2-indic-indic-1B",
+          "https://arxiv.org/abs/2305.16307"
+        ]
+      },
+      "notes": "Uses custom modelling code (trust_remote_code) and the IndicTransToolkit pre/post-processor. Disabled until the compatibility check passes on your machine."
+    },
+    {
+      "id": "indictrans2-en-indic-dist-200m",
+      "display_name": "IndicTrans2 English to Indic (distilled 200M)",
+      "family": "indictrans2",
+      "task": "translate",
+      "hf_repo": "ai4bharat/indictrans2-en-indic-dist-200M",
+      "licence": {
+        "spdx": "MIT",
+        "class": "permissive",
+        "verified": false,
+        "note": "MIT per the IndicTrans2 GitHub repository and the sibling indic-indic-1B model page; this repository's own model card was not opened. scripts/pin_models.py verifies it against Hub metadata."
+      },
+      "requires_remote_code": true,
+      "params_millions": 200,
+      "code_set": "flores200",
+      "sources": [
+        "en"
+      ],
+      "targets": "non_english",
+      "priority": 90,
+      "enabled_by_default": false,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Distilled variant of the 1B model; same language coverage. Codes not yet verified against the tokenizer.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/ai4bharat/indictrans2-en-indic-dist-200M"
+        ]
+      },
+      "notes": "Laptop-friendly variant. Uses custom modelling code; disabled until the compatibility check passes."
+    },
+    {
+      "id": "indictrans2-indic-en-dist-200m",
+      "display_name": "IndicTrans2 Indic to English (distilled 200M)",
+      "family": "indictrans2",
+      "task": "translate",
+      "hf_repo": "ai4bharat/indictrans2-indic-en-dist-200M",
+      "licence": {
+        "spdx": "MIT",
+        "class": "permissive",
+        "verified": false,
+        "note": "MIT per the IndicTrans2 GitHub repository and the sibling indic-indic-1B model page; this repository's own model card was not opened. scripts/pin_models.py verifies it against Hub metadata."
+      },
+      "requires_remote_code": true,
+      "params_millions": 200,
+      "code_set": "flores200",
+      "sources": "non_english",
+      "targets": [
+        "en"
+      ],
+      "priority": 90,
+      "enabled_by_default": false,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Distilled variant of the 1B model; same language coverage. Codes not yet verified against the tokenizer.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/ai4bharat/indictrans2-indic-en-dist-200M"
+        ]
+      },
+      "notes": "Laptop-friendly variant. Uses custom modelling code; disabled until the compatibility check passes."
+    },
+    {
+      "id": "indictrans2-indic-indic-dist-320m",
+      "display_name": "IndicTrans2 Indic to Indic (distilled 320M)",
+      "family": "indictrans2",
+      "task": "translate",
+      "hf_repo": "ai4bharat/indictrans2-indic-indic-dist-320M",
+      "licence": {
+        "spdx": "MIT",
+        "class": "permissive",
+        "verified": false,
+        "note": "MIT per the IndicTrans2 GitHub repository and the sibling indic-indic-1B model page; this repository's own model card was not opened. scripts/pin_models.py verifies it against Hub metadata."
+      },
+      "requires_remote_code": true,
+      "params_millions": 320,
+      "code_set": "flores200",
+      "sources": "non_english",
+      "targets": "non_english",
+      "priority": 90,
+      "enabled_by_default": false,
+      "segment_token_limit": 200,
+      "evidence": {
+        "checked": "2026-11-16",
+        "coverage": "Distilled variant of the 1B model; same language coverage. Codes not yet verified against the tokenizer.",
+        "codes_verified": false,
+        "urls": [
+          "https://huggingface.co/ai4bharat/indictrans2-indic-indic-dist-320M"
+        ]
+      },
+      "notes": "Laptop-friendly variant. Uses custom modelling code; disabled until the compatibility check passes."
+    }
+  ]
+}

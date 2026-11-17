@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "languages": [
+    {"code": "en", "name": "English", "native_name": "English", "scripts": ["Latin"]},
+    {"code": "te", "name": "Telugu", "native_name": "తెలుగు", "scripts": ["Telugu"]},
+    {"code": "hi", "name": "Hindi", "native_name": "हिन्दी", "scripts": ["Devanagari"]},
+    {"code": "ta", "name": "Tamil", "native_name": "தமிழ்", "scripts": ["Tamil"]},
+    {"code": "kn", "name": "Kannada", "native_name": "ಕನ್ನಡ", "scripts": ["Kannada"]},
+    {"code": "ml", "name": "Malayalam", "native_name": "മലയാളം", "scripts": ["Malayalam"]},
+    {"code": "bn", "name": "Bengali", "native_name": "বাংলা", "scripts": ["Bengali"]},
+    {"code": "mr", "name": "Marathi", "native_name": "मराठी", "scripts": ["Devanagari"]},
+    {"code": "gu", "name": "Gujarati", "native_name": "ગુજરાતી", "scripts": ["Gujarati"]},
+    {"code": "ur", "name": "Urdu", "native_name": "اردو", "scripts": ["Arabic"], "rtl": true},
+    {"code": "pa", "name": "Punjabi (Gurmukhi)", "native_name": "ਪੰਜਾਬੀ", "scripts": ["Gurmukhi"]}
+  ],
+  "known_unlisted": [
+    {"code": "as", "name": "Assamese", "scripts": ["Bengali"]},
+    {"code": "mni", "name": "Manipuri", "scripts": ["Bengali", "MeeteiMayek"]},
+    {"code": "ne", "name": "Nepali", "scripts": ["Devanagari"]},
+    {"code": "sa", "name": "Sanskrit", "scripts": ["Devanagari"]},
+    {"code": "mai", "name": "Maithili", "scripts": ["Devanagari"]},
+    {"code": "doi", "name": "Dogri", "scripts": ["Devanagari"]},
+    {"code": "brx", "name": "Bodo", "scripts": ["Devanagari"]},
+    {"code": "gom", "name": "Konkani", "scripts": ["Devanagari"]},
+    {"code": "sd", "name": "Sindhi", "scripts": ["Arabic", "Devanagari"]},
+    {"code": "ks", "name": "Kashmiri", "scripts": ["Arabic", "Devanagari"]},
+    {"code": "ar", "name": "Arabic", "scripts": ["Arabic"]},
+    {"code": "fa", "name": "Persian", "scripts": ["Arabic"]},
+    {"code": "ps", "name": "Pashto", "scripts": ["Arabic"]},
+    {"code": "or", "name": "Odia", "scripts": ["Oriya"]},
+    {"code": "si", "name": "Sinhala", "scripts": ["Sinhala"]},
+    {"code": "sat", "name": "Santali", "scripts": ["OlChiki"]}
+  ],
+  "script_info": {
+    "Latin": {"open": true, "note": "Used by many languages, and by romanised Indian-language text (for example Telugu typed in English letters). The script alone cannot identify the language."},
+    "Arabic": {"open": true, "note": "Used by Urdu, Arabic, Persian, Pashto, Sindhi, Kashmiri and others."},
+    "Devanagari": {"open": true, "note": "Used by Hindi, Marathi, Nepali, Sanskrit, Maithili, Dogri, Bodo, Konkani and others."},
+    "Cyrillic": {"open": true, "note": "Used by many languages."},
+    "Han": {"open": true, "note": "Used by Chinese, Japanese and others."},
+    "Bengali": {"open": false, "note": "Used by Bengali and Assamese."},
+    "Kannada": {"open": false, "note": "Tulu is also written in Kannada script; text is assumed to be Kannada."},
+    "Telugu": {"open": false},
+    "Tamil": {"open": false},
+    "Malayalam": {"open": false},
+    "Gujarati": {"open": false},
+    "Gurmukhi": {"open": false},
+    "Oriya": {"open": false},
+    "Sinhala": {"open": false}
+  }
+}
