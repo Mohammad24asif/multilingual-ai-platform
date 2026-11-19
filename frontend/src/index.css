@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens. One accent (peacock) carries interaction; amber means "read this" (licences, warnings);
+   colour is never the only signal - every status also has text. */
+:root {
+  --paper: #f3f6f5;
+  --panel: #ffffff;
+  --panel-2: #ecf0ef;
+  --ink: #15202a;
+  --soft: #4a5a66;
+  --rule: #d3dbd9;
+  --accent: #0b6e6a;
+  --accent-ink: #ffffff;
+  --warn: #7a4e00;
+  --warn-bg: #fcf0cf;
+  --bad: #962a2a;
+  --bad-bg: #fae3df;
+  --ok: #1b6538;
+  --ok-bg: #dff1e5;
+  color-scheme: light;
+}
+.dark {
+  --paper: #0e1620;
+  --panel: #15212c;
+  --panel-2: #1b2a37;
+  --ink: #e7edf2;
+  --soft: #9cafbd;
+  --rule: #2a3b4a;
+  --accent: #5cc4c0;
+  --accent-ink: #052120;
+  --warn: #f0c35e;
+  --warn-bg: #382d12;
+  --bad: #ff9d92;
+  --bad-bg: #3a1d1b;
+  --ok: #82d69c;
+  --ok-bg: #12301c;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel-2);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accentink: var(--accent-ink);
+  --color-warn: var(--warn);
+  --color-warnbg: var(--warn-bg);
+  --color-bad: var(--bad);
+  --color-badbg: var(--bad-bg);
+  --color-ok: var(--ok);
+  --color-okbg: var(--ok-bg);
+  --font-sans: "Noto Sans", "Nirmala UI", "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Script-appropriate faces: text is tagged with lang, so each script gets a matching Noto family. */
+:lang(te) { font-family: "Noto Sans Telugu", "Nirmala UI", var(--font-sans); }
+:lang(hi), :lang(mr) { font-family: "Noto Sans Devanagari", "Nirmala UI", var(--font-sans); }
+:lang(ta) { font-family: "Noto Sans Tamil", "Nirmala UI", var(--font-sans); }
+:lang(kn) { font-family: "Noto Sans Kannada", "Nirmala UI", var(--font-sans); }
+:lang(ml) { font-family: "Noto Sans Malayalam", "Nirmala UI", var(--font-sans); }
+:lang(bn) { font-family: "Noto Sans Bengali", "Nirmala UI", var(--font-sans); }
+:lang(gu) { font-family: "Noto Sans Gujarati", "Nirmala UI", var(--font-sans); }
+:lang(pa) { font-family: "Noto Sans Gurmukhi", "Nirmala UI", var(--font-sans); }
+:lang(ur) { font-family: "Noto Nastaliq Urdu", "Noto Naskh Arabic", var(--font-sans); line-height: 2.2; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
