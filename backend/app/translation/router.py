@@ -89,7 +89,7 @@ class TranslationRouter:
     def remote_code_allowed(self, spec: ModelSpec) -> bool:
         return spec.revision_pinned and f"{spec.hf_repo}@{spec.revision}" in self._policy.remote_code_allowlist
 
-    def _policy_reasons(self, spec: ModelSpec, *, check_availability: bool = True) -> list[str]:
+    def policy_reasons(self, spec: ModelSpec, *, check_availability: bool = True) -> list[str]:
         """Reasons unrelated to which languages the model covers (switches, licence, safety, resources)."""
         reasons: list[str] = []
         if not self.is_enabled(spec):
@@ -111,12 +111,16 @@ class TranslationRouter:
         return reasons
 
     def _reasons(self, spec: ModelSpec, src: str, tgt: str, *, check_availability: bool = True) -> list[str]:
-        reasons = self._policy_reasons(spec, check_availability=check_availability)
+        reasons = self.policy_reasons(spec, check_availability=check_availability)
         if src not in spec.sources:
             reasons.append("source_language_not_supported")
         if tgt not in spec.targets:
             reasons.append("target_language_not_supported")
         return reasons
+
+    def usable_models(self, *, check_availability: bool = True) -> list[ModelSpec]:
+        """Translation models that pass every policy check (switches, licence, safety, resources, availability)."""
+        return [s for s in self._registry.models("translate") if not self.policy_reasons(s, check_availability=check_availability)]
 
     def evaluate(self, src: str, tgt: str, *, check_availability: bool = True) -> list[Candidate]:
         """Every translation model with the reasons (if any) it cannot serve this pair, best first."""
@@ -192,7 +196,7 @@ class TranslationRouter:
     # -- reporting ---------------------------------------------------------------------------
     def supported_languages(self) -> dict[str, dict[str, bool]]:
         """For each registry language: can it be a source / target under the current policy (ignoring downloads)?"""
-        usable = [s for s in self._registry.models("translate") if not self._policy_reasons(s, check_availability=False)]
+        usable = [s for s in self._registry.models("translate") if not self.policy_reasons(s, check_availability=False)]
         result: dict[str, dict[str, bool]] = {}
         for lang in self._registry.languages():
             code = lang.code

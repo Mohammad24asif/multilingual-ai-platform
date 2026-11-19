@@ -117,3 +117,15 @@ class JobCancelledError(PlatformError):
     code = "cancelled"
     status = 499
     title = "Request cancelled"
+
+
+class PayloadTooLargeError(PlatformError):
+    code = "payload_too_large"
+    status = 413
+    title = "Request body is too large"
+
+
+class NotFoundError(PlatformError):
+    code = "not_found"
+    status = 404
+    title = "Not found"

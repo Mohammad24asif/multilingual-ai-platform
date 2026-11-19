@@ -27,6 +27,7 @@ class BackendContext:
     device: str  # "cpu" | "cuda"
     allow_download: bool = False  # False => local files only; the user downloads models explicitly
     torch_threads: int | None = None
+    require_safetensors: bool = False  # True => refuse pickle-based weight files
 
 
 class TranslationBackend(Protocol):
