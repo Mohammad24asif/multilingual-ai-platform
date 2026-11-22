@@ -1,0 +1,37 @@
+# STATUS: not executed yet (authored offline). The first push will be its first run.
+name: backend
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  core:
+    name: "Core tests (standard library only)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        working-directory: backend
+        run: python -m unittest discover -s tests -t . -v
+      - name: Generated capability docs are up to date
+        run: python scripts/generate_capability_docs.py --check
+
+  full:
+    name: "Lint and full test suite (FastAPI, SQLAlchemy, fake model backends)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: "Install (no ML extra - tests never load real models)"
+        working-directory: backend
+        run: uv sync
+      - name: Lint
+        working-directory: backend
+        run: uv run ruff check .
+      - name: Tests
+        working-directory: backend
+        run: uv run pytest -q

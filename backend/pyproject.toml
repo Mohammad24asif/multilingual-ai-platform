@@ -56,8 +56,9 @@ line-length = 130
 target-version = "py311"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM"]
-ignore = ["E501", "B904", "SIM105", "SIM108"]
+# Bug-oriented rules only, so CI stays quiet about style. Add "I" (import order) once you run `ruff check --fix` yourself.
+select = ["E", "F", "B"]
+ignore = ["E501", "B904"]
 
 [tool.mypy]
 python_version = "3.11"

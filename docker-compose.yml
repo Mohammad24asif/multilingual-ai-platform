@@ -1,0 +1,37 @@
+# STATUS: written but NOT run in the authoring sandbox (no Docker there). First run: `docker compose up --build`.
+# Models are not part of the images. Download them into the `models` volume once, for example:
+#   docker compose run --rm api uv run --no-sync python /repo/scripts/pin_models.py
+#   docker compose run --rm api uv run --no-sync python /repo/scripts/download_models.py --model nllb-200-distilled-600m
+services:
+  api:
+    build:
+      context: .
+      dockerfile: deployment/docker/backend.Dockerfile
+    environment:
+      MLAI_LICENCE_MODE: ${MLAI_LICENCE_MODE:-research}
+      MLAI_DEVICE: ${MLAI_DEVICE:-cpu}
+      MLAI_ALLOW_MODEL_DOWNLOAD: ${MLAI_ALLOW_MODEL_DOWNLOAD:-false}
+      MLAI_ENABLED_MODELS: ${MLAI_ENABLED_MODELS:-}
+      MLAI_REMOTE_CODE_ALLOWLIST: ${MLAI_REMOTE_CODE_ALLOWLIST:-}
+      MLAI_CORS_ORIGINS: ${MLAI_CORS_ORIGINS:-http://localhost:8080}
+      HF_TOKEN: ${HF_TOKEN:-}
+    volumes:
+      - models:/models
+      - data:/data
+    ports:
+      - "127.0.0.1:8000:8000"   # API docs at http://127.0.0.1:8000/api/docs; bound to localhost on purpose
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: deployment/docker/frontend.Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:8080:80"
+    restart: unless-stopped
+
+volumes:
+  models:
+  data:
