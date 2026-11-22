@@ -59,7 +59,7 @@ class Registry:
 
     def languages_for_script(self, script: str) -> list[tuple[str, str, bool]]:
         """(code, name, listed) for every known language that uses ``script``."""
-        found = [(l.code, l.name, True) for l in self._languages.values() if script in l.scripts]
+        found = [(language.code, language.name, True) for language in self._languages.values() if script in language.scripts]
         found += [(u.code, u.name, False) for u in self._unlisted if script in u.scripts]
         return found
 
@@ -95,7 +95,7 @@ class Registry:
             )
             for item in languages_doc.get("languages", [])
         ]
-        codes = [l.code for l in languages]
+        codes = [language.code for language in languages]
         if len(codes) != len(set(codes)):
             errors.append("duplicate language codes in languages.json")
         unlisted = [

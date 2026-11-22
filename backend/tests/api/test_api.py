@@ -91,12 +91,11 @@ class TranslateEndpointTests(unittest.TestCase):
 
     def test_oversized_body_is_rejected_before_parsing(self):
         with make_client() as client:
-            client.app.state.container  # app is created with the default limit (1 MB)
+            # The app uses the default request-body limit (1 MB).
             big = "x" * 1_100_000
             response = client.post("/api/v1/translate", content=json.dumps({"text": big, "target_language": "te"}), headers={"content-type": "application/json"})
             self.assertEqual(response.status_code, 413)
             self.assertEqual(response.json()["code"], "payload_too_large")
-
     def test_route_explanation_and_detect(self):
         with make_client() as client:
             route = client.get("/api/v1/route", params={"source": "kn", "target": "en"}).json()

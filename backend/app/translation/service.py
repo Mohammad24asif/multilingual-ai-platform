@@ -126,13 +126,13 @@ class TranslationService:
 
         translation = segmented.render(current)
         warnings = self._validate(source_texts, current, request.target, translation)
-        timings["queue_wait_ms"] = _ms(sum(l.queue_wait_s for l in legs))
-        timings["model_load_ms"] = _ms(sum(l.load_s for l in legs))
-        timings["inference_ms"] = _ms(sum(l.inference_s for l in legs))
+        timings["queue_wait_ms"] = _ms(sum(leg.queue_wait_s for leg in legs))
+        timings["model_load_ms"] = _ms(sum(leg.load_s for leg in legs))
+        timings["inference_ms"] = _ms(sum(leg.inference_s for leg in legs))
         timings["total_ms"] = _ms(clock() - started)
         log_event(
             logger, logging.INFO, "translate.done", source=source, target=request.target,
-            models=[l.model_id for l in legs], pivot=plan.pivot_via, chars=len(norm.text),
+            models=[leg.model_id for leg in legs], pivot=plan.pivot_via, chars=len(norm.text),
             segments=len(source_texts), warnings=[w.code for w in warnings], total_ms=timings["total_ms"],
         )
         return TranslationResult(

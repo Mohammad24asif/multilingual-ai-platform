@@ -139,8 +139,7 @@ class PivotTests(unittest.TestCase):
         plan = make_router(self._split_registry()).plan("te", "hi", allow_pivot=True)
         self.assertTrue(plan.is_pivot)
         self.assertEqual(plan.pivot_via, "en")
-        self.assertEqual([(l.source, l.target) for l in plan.legs], [("te", "en"), ("en", "hi")])
-
+        self.assertEqual([(leg.source, leg.target) for leg in plan.legs], [("te", "en"), ("en", "hi")])
     def test_direct_route_never_pivots(self):
         plan = make_router().plan("te", "hi", allow_pivot=True)
         self.assertFalse(plan.is_pivot)

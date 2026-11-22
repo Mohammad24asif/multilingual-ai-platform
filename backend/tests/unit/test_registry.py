@@ -11,7 +11,7 @@ class ShippedRegistryTests(unittest.TestCase):
         cls.registry = Registry.from_dir()
 
     def test_target_language_list_is_registered(self):
-        self.assertEqual({l.code for l in self.registry.languages()}, TARGET_LANGS)
+        self.assertEqual({language.code for language in self.registry.languages()}, TARGET_LANGS)
 
     def test_every_language_has_a_script_and_native_name(self):
         for lang in self.registry.languages():

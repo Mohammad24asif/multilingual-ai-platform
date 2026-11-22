@@ -165,8 +165,8 @@ class PivotTests(unittest.TestCase):
             request = TranslationRequest("ఇది ఒక పరీక్ష. ఇది రెండవది.", target="hi", source="te", allow_pivot=True)
             result = run(h.service.translate(request))
             self.assertEqual(result.pivot_via, "en")
-            self.assertEqual([(l.source, l.target, l.model_id) for l in result.legs],
-                             [("te", "en", "mbart50-many-to-many"), ("en", "hi", "nllb-200-distilled-600m")])
+            self.assertEqual([(leg.source, leg.target, leg.model_id) for leg in result.legs],
+                 [("te", "en", "mbart50-many-to-many"), ("en", "hi", "nllb-200-distilled-600m")])
             first_outputs = [out for out in (f"translated text {len(s)}" for s in ["ఇది ఒక పరీక్ష.", "ఇది రెండవది."])]
             second_inputs = h.factory.backend_for("nllb-200-distilled-600m").calls[0][0]
             self.assertEqual(second_inputs, first_outputs)
