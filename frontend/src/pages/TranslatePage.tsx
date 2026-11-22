@@ -8,7 +8,7 @@ import { LanguageSelect } from "../components/LanguageSelect";
 import { Notice } from "../components/Notice";
 import { RouteLine } from "../components/RouteLine";
 import { formatCount, formatMs } from "../lib/format";
-import { problemCandidates, problemHint, problemPivotVia } from "../lib/problem";
+import { problemCandidates, problemHint, problemPivotVia, problemSuggested, problemUnlisted } from "../lib/problem";
 import { describeWarning } from "../lib/reasons";
 import { indexByCode, languageLabel } from "../lib/scripts";
 
@@ -27,23 +27,41 @@ function ErrorPanel({
 }) {
   const problem = error.problem;
   const candidates = problemCandidates(problem);
+  const suggested = problemSuggested(problem);
+  const unlisted = problemUnlisted(problem);
   const pivotVia = problemPivotVia(problem);
   const hint = problemHint(problem);
-  return (
-    <Notice tone="bad" title={problem.title}>
-      <p>{problem.detail}</p>
-      {candidates.length > 0 && (
-        <div className="mt-3">
-          <p>Which language is the text written in?</p>
-          <div className="mt-2 flex flex-wrap gap-2">
+
+  if (problem.code === "language_ambiguous") {
+    const script = typeof problem.script === "string" ? problem.script : null;
+    return (
+      <Notice tone="info" title="Which language is this text in?">
+        <p>
+          {script
+            ? `It is written in ${script} script, which more than one language uses, so the text alone cannot decide.`
+            : problem.detail}
+        </p>
+        {candidates.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
             {candidates.map((code) => (
-              <Button key={code} onClick={() => onPickSource(code)}>
+              <Button key={code} variant={code === suggested ? "primary" : "secondary"} onClick={() => onPickSource(code)}>
                 {byCode[code] ? languageLabel(byCode[code]) : code}
+                {code === suggested ? " (likely)" : ""}
               </Button>
             ))}
           </div>
-        </div>
-      )}
+        )}
+        {unlisted.length > 0 && (
+          <p className="mt-3 text-xs text-soft">Other languages that use this script are not supported yet: {unlisted.join(", ")}.</p>
+        )}
+      </Notice>
+    );
+  }
+
+  const tone = pivotVia || problem.code === "model_not_downloaded" ? "warn" : "bad";
+  return (
+    <Notice tone={tone} title={problem.title}>
+      <p>{problem.detail}</p>
       {pivotVia && (
         <div className="mt-3">
           <Button onClick={onAllowPivot}>Translate in two steps via {byCode[pivotVia]?.name ?? pivotVia}</Button>
@@ -51,7 +69,7 @@ function ErrorPanel({
         </div>
       )}
       {hint && <p className="mt-2 font-mono text-xs">{hint}</p>}
-      {problem.request_id && <p className="mt-2 text-xs">Request id: {problem.request_id}</p>}
+      {tone === "bad" && problem.request_id && <p className="mt-2 text-xs">Request id: {problem.request_id}</p>}
     </Notice>
   );
 }
@@ -174,7 +192,7 @@ export function TranslatePage({ languages, models, maxChars }: { languages: Lang
       </header>
 
       <div className="grid items-start gap-4 md:grid-cols-[1fr_auto_1fr]">
-        <section className="rounded-[10px] border border-rule bg-panel focus-within:border-accent">
+        <section className="rounded-[10px] border border-rule bg-panel focus-within:border-accent focus-within:outline-2 focus-within:outline-accent">
           <div className="border-b border-rule px-4 py-3">
             <LanguageSelect id="source-language" label="From" value={source} onChange={setSource} languages={sourceLanguages} autoLabel="Detect language" />
           </div>

@@ -1,6 +1,6 @@
 import type { Language, ModelInfo } from "../api/types";
 import { Badge } from "../components/Badge";
-import { formatMb } from "../lib/format";
+import { formatMb, hostname } from "../lib/format";
 import { describeReason, licenceLabel, licenceTone } from "../lib/reasons";
 import { languageLabel } from "../lib/scripts";
 
@@ -27,35 +27,37 @@ function ModelCard({ model }: { model: ModelInfo }) {
         </ul>
       )}
 
-      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 text-sm">
-        <dt className="text-soft">Directions</dt>
-        <dd>
-          {model.source_languages.length} source and {model.target_languages.length} target languages
-        </dd>
-        <dt className="text-soft">Memory</dt>
-        <dd>about {formatMb(model.estimated_ram_mb)} (estimate, not measured)</dd>
-        <dt className="text-soft">Weights</dt>
-        <dd>{model.downloaded === null ? "unknown" : model.downloaded ? "downloaded" : "not downloaded"}</dd>
-        <dt className="text-soft">Revision</dt>
-        <dd>{model.revision_pinned ? "pinned" : "not pinned"}</dd>
-        <dt className="text-soft">In memory</dt>
-        <dd>{model.state.replace("_", " ")}</dd>
-      </dl>
-
-      <p className="mt-3 text-sm">{model.evidence.coverage}</p>
-      <p className="mt-1 text-xs text-soft">
-        Checked {model.evidence.checked ?? "unknown date"}. Language codes verified against the tokenizer: {model.evidence.codes_verified ? "yes" : "not yet"}.
-      </p>
-      {urls.length > 0 && (
-        <p className="mt-1 text-xs">
-          {urls.map((url) => (
-            <a key={url} href={url} target="_blank" rel="noreferrer" className="mr-3 text-accent underline">
-              Source
-            </a>
-          ))}
+      <details open={model.usable} className="mt-3">
+        <summary className="cursor-pointer text-sm font-medium text-accent">Details and evidence</summary>
+        <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 text-sm">
+          <dt className="text-soft">Directions</dt>
+          <dd>
+            {model.source_languages.length} source and {model.target_languages.length} target languages
+          </dd>
+          <dt className="text-soft">Memory</dt>
+          <dd>about {formatMb(model.estimated_ram_mb)} (estimate, not measured)</dd>
+          <dt className="text-soft">Weights</dt>
+          <dd>{model.downloaded === null ? "unknown" : model.downloaded ? "downloaded" : "not downloaded"}</dd>
+          <dt className="text-soft">Revision</dt>
+          <dd>{model.revision_pinned ? "pinned" : "not pinned"}</dd>
+          <dt className="text-soft">In memory</dt>
+          <dd>{model.state.replace("_", " ")}</dd>
+        </dl>
+        <p className="mt-3 text-sm">{model.evidence.coverage}</p>
+        <p className="mt-1 text-xs text-soft">
+          Checked {model.evidence.checked ?? "unknown date"}. Language codes verified against the tokenizer: {model.evidence.codes_verified ? "yes" : "not yet"}.
         </p>
-      )}
-      {model.notes && <p className="mt-2 text-xs text-soft">{model.notes}</p>}
+        {urls.length > 0 && (
+          <p className="mt-1 text-xs">
+            {urls.map((url) => (
+              <a key={url} href={url} target="_blank" rel="noreferrer" className="mr-3 text-accent underline">
+                {hostname(url)}
+              </a>
+            ))}
+          </p>
+        )}
+        {model.notes && <p className="mt-2 text-xs text-soft">{model.notes}</p>}
+      </details>
     </li>
   );
 }
@@ -75,7 +77,7 @@ export function ModelsPage({ models, languages }: { models: ModelInfo[]; languag
           Models
         </h2>
         <ul className="grid gap-4 lg:grid-cols-2">
-          {models.map((model) => (
+          {[...models].sort((a, b) => Number(b.usable) - Number(a.usable)).map((model) => (
             <ModelCard key={model.id} model={model} />
           ))}
         </ul>

@@ -10,3 +10,11 @@ export function formatMb(mb: number | null | undefined): string {
   if (mb === null || mb === undefined) return "unknown";
   return mb >= 1024 ? `${(mb / 1024).toFixed(1)} GB` : `${mb} MB`;
 }
+
+export function hostname(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "source";
+  }
+}

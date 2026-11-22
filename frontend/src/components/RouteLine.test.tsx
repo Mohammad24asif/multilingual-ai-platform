@@ -42,6 +42,8 @@ describe("RouteLine", () => {
       />,
     );
     expect(plain(html)).toContain("Two-step translation through English");
+    expect(plain(html)).toContain("Step 1");
+    expect(plain(html)).toContain("Step 2");
     expect(html).toContain("हिन्दी");
   });
 

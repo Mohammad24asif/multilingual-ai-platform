@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import type { Language, ModelInfo } from "../api/types";
 import { licenceTone } from "../lib/reasons";
 import { Badge } from "./Badge";
@@ -24,7 +23,15 @@ function ModelNode({ modelId, model }: { modelId: string; model?: ModelInfo }) {
   );
 }
 
-/** The route a translation took: language -> model (with its licence) -> language, with any pivot spelled out. */
+function Arrow() {
+  return (
+    <span aria-hidden="true" className="text-soft">
+      →
+    </span>
+  );
+}
+
+/** The route a translation took: language -> model (with its licence) -> language, one row per step, with any pivot spelled out. */
 export function RouteLine({
   legs,
   languages,
@@ -36,19 +43,18 @@ export function RouteLine({
   models: Record<string, ModelInfo>;
   pivotVia?: string | null;
 }) {
-  const nodes: ReactNode[] = [];
-  legs.forEach((leg, index) => {
-    if (index === 0) nodes.push(<LangChip key={`from-${index}`} code={leg.source} language={languages[leg.source]} />);
-    nodes.push(<ModelNode key={`model-${index}`} modelId={leg.modelId} model={models[leg.modelId]} />);
-    nodes.push(<LangChip key={`to-${index}`} code={leg.target} language={languages[leg.target]} />);
-  });
+  const steps = legs.length > 1;
   return (
     <div>
-      <ol aria-label="Translation route" className="flex flex-wrap items-center gap-y-2">
-        {nodes.map((node, index) => (
-          <li key={index} className="flex items-center">
-            {index > 0 && <span aria-hidden="true" className="mx-1.5 h-px w-5 bg-rule" />}
-            {node}
+      <ol aria-label="Translation route" className="space-y-2">
+        {legs.map((leg, index) => (
+          <li key={index} className="flex flex-wrap items-center gap-2">
+            {steps && <span className="w-12 text-xs font-medium text-soft">Step {index + 1}</span>}
+            <LangChip code={leg.source} language={languages[leg.source]} />
+            <Arrow />
+            <ModelNode modelId={leg.modelId} model={models[leg.modelId]} />
+            <Arrow />
+            <LangChip code={leg.target} language={languages[leg.target]} />
           </li>
         ))}
       </ol>

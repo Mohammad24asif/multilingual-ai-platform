@@ -19,3 +19,7 @@ export function problemPivotVia(p: Problem): string | null {
 export function problemHint(p: Problem): string | null {
   return typeof p.hint === "string" ? p.hint : null;
 }
+
+export function problemUnlisted(p: Problem): string[] {
+  return strings(p.unlisted_candidates);
+}
