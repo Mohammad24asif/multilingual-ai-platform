@@ -1,0 +1,17 @@
+{
+  "models": {
+    "nllb-200-distilled-600m": {
+      "hf_repo": "facebook/nllb-200-distilled-600M",
+      "revision": "38bd1c6a0f58097b26ef7c7cd73a0dcac034350a",
+      "hub_licence": "cc-by-nc-4.0",
+      "checked_at": "2026-11-22T19:33:14+00:00"
+    },
+    "mbart50-many-to-many": {
+      "hf_repo": "facebook/mbart-large-50-many-to-many-mmt",
+      "revision": "e30b6cb8eb0d43a0b73cab73c7676b9863223a30",
+      "hub_licence": null,
+      "checked_at": "2026-11-22T19:33:14+00:00"
+    }
+  },
+  "generated_at": "2026-11-22T19:33:14+00:00"
+}

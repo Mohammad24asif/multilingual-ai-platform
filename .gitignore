@@ -28,3 +28,6 @@ Thumbs.db
 # Browser-check build output
 tools/browser-check/dist/
 tools/browser-check/shots/
+
+# Backend local test reports
+backend/reports/local/

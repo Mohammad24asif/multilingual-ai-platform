@@ -33,7 +33,7 @@ cd backend
 uv sync --extra ml                       # installs CPU-only PyTorch + Transformers
 cd ..
 uv run --project backend python scripts/verify_environment.py     # what is installed, what is missing
-uv run --project backend python scripts/pin_models.py             # records exact model commits and licences (needs internet)
+# Uses the checked-in models.lock.json; do not regenerate pins unless intentionally updating model revisions.
 uv run --project backend python scripts/download_models.py --model nllb-200-distilled-600m    # tells you the size, then asks
 
 # 3. check real inference before opening the UI

@@ -63,7 +63,9 @@ class Container:
         )
         # When downloads are allowed a missing model is fetched on first use, so it counts as available.
         self.availability: Callable[[ModelSpec], bool] = availability or (
-            (lambda spec: True) if config.allow_model_download else AvailabilityCache()
+           (lambda spec: True)
+           if config.allow_model_download
+           else AvailabilityCache(require_safetensors=config.require_safetensors)
         )
         self.router = TranslationRouter(self.registry, policy, is_available=self.availability)
         self.device = device or choose_device(config.device)
