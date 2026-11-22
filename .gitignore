@@ -25,3 +25,6 @@ reports/local/
 Thumbs.db
 .idea/
 .vscode/
+# Browser-check build output
+tools/browser-check/dist/
+tools/browser-check/shots/
