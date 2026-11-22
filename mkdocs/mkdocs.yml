@@ -1,0 +1,41 @@
+site_name: Multilingual AI Intelligence Platform
+# The documentation set lives at the repository root (README, ADRs, SECURITY, ...) plus docs/, so docs_dir is the parent of this folder.
+# Build:  mkdocs build --strict -f mkdocs/mkdocs.yml     (the site is written next to the repository, outside docs_dir)
+docs_dir: ..
+site_dir: ../../mlai-site
+exclude_docs: |
+  frontend/
+  backend/
+  scripts/
+  deployment/
+  .github/
+  reports/
+  data/
+  node_modules/
+  mkdocs/
+  tools/
+nav:
+  - Home: README.md
+  - Install and run: docs/INSTALLATION.md
+  - Architecture: docs/ARCHITECTURE.md
+  - Decisions: ARCHITECTURE_DECISIONS.md
+  - Capabilities: docs/CAPABILITIES.md
+  - Models: docs/MODEL_DOCUMENTATION.md
+  - API: docs/API.md
+  - Testing: docs/TESTING.md
+  - Security: SECURITY.md
+  - Limitations: docs/LIMITATIONS.md
+  - Viva questions: docs/VIVA.md
+  - Status: PROJECT_STATUS.md
+  - Changelog: CHANGELOG.md
+  - Contributing: CONTRIBUTING.md
+theme:
+  name: material
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

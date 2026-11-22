@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from ..core.errors import PlatformError, QueueFullError
-from ..core.logging import log_event, request_id_var
+from ..core.logging import request_id_var
 
 logger = logging.getLogger(__name__)
 PROBLEM_JSON = "application/problem+json"
